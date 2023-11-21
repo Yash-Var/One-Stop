@@ -23,6 +23,7 @@ const questionRouter = require("./routes/question");
 // error handler
 const notFoundMiddleware = require("./middleware/not-found");
 const errorHandlerMiddleware = require("./middleware/error-handler");
+const { verifyEmail } = require("./controllers/user_auth");
 
 app.set("trust proxy", 1);
 app.use(
@@ -47,6 +48,7 @@ app.use("/api/v1/user", userRouter);
 app.use("/api/v1/admin/event", eventRouter);
 app.use("/api/v1/question", questionRouter);
 app.use("/api/v1/event_reg", event_regRouter);
+app.get("/email/:token", verifyEmail);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);

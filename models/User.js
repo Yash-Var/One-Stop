@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-
+const crypto = require("crypto");
 const UserSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -23,7 +23,28 @@ const UserSchema = new mongoose.Schema({
     required: [true, "Please provide password"],
     minlength: 6,
   },
+  isVerfied: {
+    type: Boolean,
+    default: false,
+  },
+  verificationToken: String,
 });
+
+UserSchema.methods.createVerificationToken = function () {
+  // Generate a random verification token using jwt
+
+  const token = jwt.sign(
+    { userId: this._id },
+    process.env.JWT_SECRET_VERIFICATION,
+    { expiresIn: "30d" }
+  );
+
+  // Set the verification token and expiration date
+  this.verificationToken = token;
+
+  // Return the generated token
+  return token;
+};
 
 UserSchema.pre("save", async function () {
   const salt = await bcrypt.genSalt(10);
