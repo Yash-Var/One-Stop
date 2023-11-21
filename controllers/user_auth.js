@@ -44,8 +44,8 @@ const register = async (req, res) => {
       port: 587,
       secure: false, // Set to true if using SSL/TLS
       auth: {
-        user: "varshneyyash7011@gmail.com", // Your email address
-        pass: "ufyd mwsk yexh hnjk", // Your email password or an application-specific password
+        user: process.env.EMAIL, // Your email address
+        pass: process.env.PASSWORD, // Your email password or an application-specific password
       },
     });
 
