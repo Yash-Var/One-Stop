@@ -52,3 +52,9 @@ module.exports = {
   getEvent,
   updateEvent,
 };
+
+// const eventRegistration = await EventRegistration.create({ ...req.body });
+// const token = eventRegistration.createJWT();
+// res
+//   .status(StatusCodes.CREATED)
+//   .json({ EventRegistration: { name: eventRegistration.name }, token });
