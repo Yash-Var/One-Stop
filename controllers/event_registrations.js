@@ -7,11 +7,17 @@ const { use } = require("express/lib/router");
 
 const registerEvent = async (req, res) => {
   //.log(req.body);
+  console.log(req.body);
   const _id = req.body?.Object_id;
 
   const Event_Object_id = req.body?.Event_Object_id;
   const { password } = req.body;
   const User_log = await User.findOne({ _id });
+  console.log(User_log);
+  console.log(_id);
+  if (!User_log) {
+    throw new UnauthenticatedError("User not found");
+  }
   console.log(User_log);
   console.log("yash varshney");
   const isPasswordCorrect = await User_log.comparePassword(password);
@@ -23,16 +29,19 @@ const registerEvent = async (req, res) => {
   const event = await Event.findOne({ _id: Event_Object_id });
 
   if (!event) {
-    throw new BadRequestError("Invalid Event");
+    throw new BadRequestError("Event not found");
   }
 
   console.log(event);
-  const isUserRegistered = event.registrations.includes(User_log._id);
-  console.log(User_log._id);
 
-  console.log(event.registrations.includes(User_log._id));
+  const isUserRegistered = event.registrations.includes(User_log._id);
+  // console.log(User_log._id);
+
+  // console.log(event.registrations.includes(User_log._id));
   if (!isUserRegistered) {
     event.registrations.push(User_log._id);
+  } else {
+    throw new BadRequestError("User already registered");
   }
 
   await event.save();
