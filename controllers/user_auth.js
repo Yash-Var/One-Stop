@@ -5,17 +5,33 @@ const nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken");
 
 const register = async (req, res) => {
-  const { name, email, password, isVerified } = req.body;
-  // //(req.body);
-  if (!name || !email || !password) {
-    throw new BadRequestError("Please provide name, email and password");
-  }
-
-  const User_Reg = await User.create({
+  const {
     name,
     email,
     password,
-    isVerified,
+    course,
+    department,
+    year,
+    universityRollno,
+    collegeId,
+  } = req.body;
+  // //(req.body);
+  console.log(req.body);
+  if (
+    !name ||
+    !email ||
+    !password ||
+    !course ||
+    !department ||
+    !year ||
+    !universityRollno ||
+    !collegeId
+  ) {
+    throw new BadRequestError("Please provide all the details");
+  }
+
+  const User_Reg = await User.create({
+    ...req.body,
   });
 
   const token = User_Reg.createJWT();
