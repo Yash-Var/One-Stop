@@ -43,7 +43,7 @@ const register = async (req, res) => {
 
   // //(process.env.VERIFY_EMAIL_URL);
   // VERIFY_EMAIL_URL=http://yourdomain.com/verify-email
-  const verificationUrl = `http://localhost:5000/email/${verificationToken}`;
+  const verificationUrl = `http://localhost:3000/email/${verificationToken}`;
   // //(verificationUrl);
   const emailTemplate = `<h3>Please click on the below link to verify your email address</h3>
     <p>${verificationUrl}</p>
