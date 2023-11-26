@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
-const bcrypt = require("bcryptjs");
+const bcrypt = require("bcrypt");
+
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 const UserSchema = new mongoose.Schema({
@@ -27,6 +28,26 @@ const UserSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  course: {
+    type: String,
+    required: [true, "Please provide course"],
+  },
+  department: {
+    type: String,
+    required: [true, "Please provide department"],
+  },
+  year: {
+    type: String,
+    required: [true, "Please provide year"],
+  },
+  universityRollno: {
+    type: String,
+    required: [true, "Please provide universityRollno"],
+  },
+  collegeId: {
+    type: String,
+    required: [true, "Please provide collegeId"],
+  },
   verificationToken: String,
 });
 
@@ -50,6 +71,7 @@ UserSchema.pre("save", async function () {
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
 });
+
 let User = "user";
 
 UserSchema.methods.createJWT = function () {
@@ -64,6 +86,8 @@ UserSchema.methods.createJWT = function () {
 
 UserSchema.methods.comparePassword = async function (canditatePassword) {
   const isMatch = await bcrypt.compare(canditatePassword, this.password);
+
+  //(isMatch);
   return isMatch;
 };
 

@@ -53,10 +53,4 @@ const forgotPassword = async (req, res) => {
 module.exports = {
   register,
   login,
-  forgotPassword,
-};
-
-module.exports = {
-  register,
-  login,
 };
