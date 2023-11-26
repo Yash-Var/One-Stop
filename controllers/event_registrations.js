@@ -7,12 +7,13 @@ const { use } = require("express/lib/router");
 
 const registerEvent = async (req, res) => {
   //.log(req.body);
-  const _id = req.body.Object_id;
+  const _id = req.body?.Object_id;
 
-  const Event_Object_id = "65620082c85d309fa0291539";
+  const Event_Object_id = req.body?.Event_Object_id;
   const { password } = req.body;
   const User_log = await User.findOne({ _id });
   console.log(User_log);
+  console.log("yash varshney");
   const isPasswordCorrect = await User_log.comparePassword(password);
 
   if (!isPasswordCorrect) {
