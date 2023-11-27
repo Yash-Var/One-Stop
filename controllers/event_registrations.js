@@ -50,24 +50,27 @@ const registerEvent = async (req, res) => {
 };
 
 const loginEvent = async (req, res) => {
-  const { email, password } = req.body;
+  console.log(req.user);
+  console.log(req.body);
+  console.log("yash varshney");
+  const _id = req.body?.Object_id;
+  const Event_Object_id = req.body?.Event_Object_id;
+  const event = await Event.findOne({ _id: Event_Object_id });
+  if (!event) {
+    throw new BadRequestError("Event not found");
+  }
 
-  if (!email || !password) {
-    throw new BadRequestError("Please provide email and password");
+  const User_log = await User.findOne({ _id });
+  if (!User_log) {
+    throw new UnauthenticatedError("User not found");
   }
-  const eventRegistration = await EventRegistration.findOne({ email });
-  if (!eventRegistration) {
-    throw new UnauthenticatedError("Invalid Credentials");
+  const isUserRegistered = event.registrations.includes(User_log._id);
+  if (!isUserRegistered) {
+    res.status(StatusCodes.OK).json({ msg: "User not registered" });
+  } else {
+    res.status(StatusCodes.OK).json({ msg: "User  registered" });
   }
-  const isPasswordCorrect = await eventRegistration.comparePassword(password);
-  if (!isPasswordCorrect) {
-    throw new UnauthenticatedError("Invalid Credentials");
-  }
-  // compare password
-  const token = eventRegistration.createJWT();
-  res
-    .status(StatusCodes.OK)
-    .json({ EventRegistration: { name: eventRegistration.name }, token });
+  // res.status(StatusCodes.OK).json({ msg: "User not registered" });
 };
 
 module.exports = {
