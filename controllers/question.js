@@ -8,8 +8,8 @@ const getAllquestions = async (req, res) => {
   const _id = req.params.event_id;
   const object_id = req.params.object_id;
 
-  const result = await result.findOne({ EventId: _id });
-  if (result) {
+  const Result = await result.findOne({ EventId: _id });
+  if (Result) {
     throw new BadRequestError("already submitted");
   }
   const event = await Event.findOne({ _id });
