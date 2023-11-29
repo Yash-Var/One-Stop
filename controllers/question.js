@@ -2,11 +2,16 @@ const question = require("../models/question");
 const { StatusCodes } = require("http-status-codes");
 const { BadRequestError, NotFoundError } = require("../errors");
 const Event = require("../models/Event");
+const result = require("../models/Result");
 
 const getAllquestions = async (req, res) => {
   const _id = req.params.event_id;
   const object_id = req.params.object_id;
 
+  const result = await result.findOne({ EventId: _id });
+  if (result) {
+    throw new BadRequestError("already submitted");
+  }
   const event = await Event.findOne({ _id });
 
   if (!event) {
