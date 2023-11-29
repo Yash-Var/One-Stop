@@ -1,10 +1,25 @@
 const question = require("../models/question");
 const { StatusCodes } = require("http-status-codes");
 const { BadRequestError, NotFoundError } = require("../errors");
+const Event = require("../models/Event");
 
 const getAllquestions = async (req, res) => {
-  const questions = await question.find().sort("createdAt");
-  res.status(StatusCodes.OK).json({ questions, count: questions.length });
+  const _id = req.params.event_id;
+  const object_id = req.params.object_id;
+
+  const event = await Event.findOne({ _id });
+
+  if (!event) {
+    throw new BadRequestError("Event not found");
+  }
+  const isUserRegistered = event.registrations.includes(object_id);
+
+  if (!isUserRegistered) {
+    throw new BadRequestError("User not registered");
+  }
+  const questions = await question.findOne({ EventId: _id }).sort("createdAt");
+  console.log(questions.Questions.length);
+  res.status(StatusCodes.OK).json({ questions });
 };
 const getquestion = async (req, res) => {
   const question = await question.findOne({
@@ -17,8 +32,20 @@ const getquestion = async (req, res) => {
 };
 
 const createquestion = async (req, res) => {
-  req.body.createdBy = req.user.userId;
-  const createQuestion = await question.create(req.body);
+  console.log(req.body.EventId);
+  const EventId = req.body.EventId;
+  const createQuestion = await question.findOne({ EventId });
+
+  console.log(createQuestion);
+
+  if (!createQuestion) {
+    throw new BadRequestError("Event not found");
+  }
+  console.log(req.body);
+  createQuestion.Questions.push(req.body.Questions);
+  console.log(createQuestion);
+  await createQuestion.save();
+
   res.status(StatusCodes.CREATED).json({ createQuestion });
 };
 

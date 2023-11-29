@@ -1,12 +1,19 @@
 const Event = require("../models/Event");
 const { StatusCodes } = require("http-status-codes");
+const question = require("../models/question");
 const { BadRequestError, NotFoundError } = require("../errors");
+const result = require("../models/Result");
 
 const createEvent = async (req, res) => {
   // if the number of event is greater than 5 then throw error
   const count = await Event.countDocuments();
+
   //.log(count);
+
   const createEvent = await Event.create(req.body);
+  console.log(createEvent);
+  const Question = await question.create({ EventId: createEvent._id });
+  const Result = await result.create({ EventId: createEvent._id });
   res.status(StatusCodes.CREATED).json({ createEvent });
 };
 

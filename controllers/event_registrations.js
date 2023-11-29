@@ -1,4 +1,3 @@
-const EventRegistration = require("../models/Event_registrations");
 const { StatusCodes } = require("http-status-codes");
 const { BadRequestError, UnauthenticatedError } = require("../errors");
 const Event = require("../models/Event");

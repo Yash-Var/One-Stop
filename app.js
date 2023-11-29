@@ -18,6 +18,7 @@ const userRouter = require("./routes/user_auth");
 const productsRouter = require("./routes/products");
 const eventRouter = require("./routes/event");
 const event_regRouter = require("./routes/EventRegistration");
+const resultRouter = require("./routes/result");
 
 const questionRouter = require("./routes/question");
 // error handler
@@ -48,6 +49,7 @@ app.use("/api/v1/user", userRouter);
 app.use("/api/v1/admin/event", eventRouter);
 app.use("/api/v1/question", questionRouter);
 app.use("/api/v1/event_reg", event_regRouter);
+app.use("/api/v1/result", resultRouter);
 app.get("/email/:token", verifyEmail);
 
 app.use(notFoundMiddleware);
