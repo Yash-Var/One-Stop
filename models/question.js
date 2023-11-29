@@ -2,43 +2,44 @@ const mongoose = require("mongoose");
 
 const QuestionSchema = new mongoose.Schema(
   {
-    question: {
-      type: String,
-      required: [true, "Please provide question"],
-      maxlength: 100,
-      minlength: 3,
+    EventId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Event",
+      required: [true, "Please provide event id"],
     },
-    option1: {
-      type: String,
-      required: [true, "Please provide option1"],
-      maxlength: 100,
-      minlength: 3,
-    },
-    option2: {
-      type: String,
-      required: [true, "Please provide option2"],
-      maxlength: 100,
-      minlength: 3,
-    },
-    option3: {
-      type: String,
-      required: [true, "Please provide option3"],
-      maxlength: 100,
-      minlength: 3,
-    },
-    option4: {
-      type: String,
-      required: [true, "Please provide option4"],
-      maxlength: 100,
-      minlength: 3,
-    },
-    answer: {
-      type: String,
-      required: [true, "Please provide answer"],
-      maxlength: 100,
-      minlength: 3,
+    Questions: {
+      type: [
+        {
+          questionText: {
+            type: String,
+            required: [false, "Please provide question text"],
+            maxlength: 100,
+            minlength: 3,
+          },
+          answerOptions: {
+            type: [
+              {
+                answerText: {
+                  type: String,
+                  required: [false, "Please provide answer text"],
+                  maxlength: 100,
+                  minlength: 3,
+                },
+                isCorrect: {
+                  type: Boolean,
+                  required: [false, "Please provide isCorrect value"],
+                },
+              },
+            ],
+
+            required: [false, "Please provide answer options"],
+          },
+        },
+      ],
+      required: [false, "Please provide question"],
     },
   },
+
   { timestamps: true }
 );
 

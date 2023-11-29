@@ -31,6 +31,7 @@ AdminSchema.pre("save", async function () {
   this.password = await bcrypt.hash(this.password, salt);
 });
 let Admin = "admin";
+console.log("yash varshney varshnehy");
 AdminSchema.methods.createJWT = function () {
   return jwt.sign(
     { role: Admin, AdminId: this._id, name: this.password },
