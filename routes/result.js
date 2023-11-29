@@ -7,4 +7,5 @@ const { userAuth } = require("../middleware/authentication");
 
 router.route("/").post(userAuth, createResult);
 
+
 module.exports = router;
