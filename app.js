@@ -1,5 +1,6 @@
 require("dotenv").config();
 require("express-async-errors");
+const {compiler} =require("compilex")
 
 // extra security packages
 const helmet = require("helmet");
@@ -25,6 +26,7 @@ const questionRouter = require("./routes/question");
 const notFoundMiddleware = require("./middleware/not-found");
 const errorHandlerMiddleware = require("./middleware/error-handler");
 const { verifyEmail } = require("./controllers/user_auth");
+const {Compiler} =require("./controllers/complier")
 
 app.set("trust proxy", 1);
 app.use(
@@ -43,6 +45,7 @@ app.get("/", (req, res) => {
 });
 
 // routes
+app.post("/compiler",Compiler)
 app.use("/api/v1/admin", authRouter);
 app.use("/api/v1/user", userRouter);
 
@@ -54,6 +57,7 @@ app.get("/email/:token", verifyEmail);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
+
 
 const port = process.env.PORT || 5000;
 
