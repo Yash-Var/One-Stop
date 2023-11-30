@@ -11,7 +11,9 @@ const getAllquestions = async (req, res) => {
   const Result = await result.findOne({ EventId: _id });
   console.log(Result);
   // console.log(Result.Users.some(user => user.UserId == object_id));
-  const isResultSubmitted=Result.Users.some(user => user.UserId == object_id);
+  const isResultSubmitted = Result.Users.some(
+    (user) => user.UserId == object_id
+  );
   console.log(isResultSubmitted);
   if (isResultSubmitted) {
     throw new BadRequestError("already submitted");
@@ -97,18 +99,20 @@ const checkquestion = async (req, res) => {
   const Result = await result.findOne({ EventId: _id });
   console.log(Result);
   // console.log(Result.Users.some(user => user.UserId == object_id));
-  const isResultSubmitted=Result.Users.some(user => user.UserId == object_id);
+  const isResultSubmitted = Result.Users.some(
+    (user) => user.UserId == object_id
+  );
   console.log(isResultSubmitted);
   if (isResultSubmitted) {
     res.status(StatusCodes.OK).json({ isResultSubmitted });
-    return
-  }else{
-    res.status(500).json({ isResultSubmitted:false });
-    return
+    return;
+  } else {
+    res.status(StatusCodes.OK).json({ isResultSubmitted: false });
+    return;
   }
 
- return
-}
+  return;
+};
 module.exports = {
   getAllquestions,
   getquestion,
