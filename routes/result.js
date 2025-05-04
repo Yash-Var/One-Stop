@@ -6,6 +6,6 @@ const { adminAuth, eventAuth } = require("../middleware/authentication");
 const { userAuth } = require("../middleware/authentication");
 
 router.route("/").post(createResult);
-router.route("/").get(getResultByEventId);
+router.route("/all").post(getResultByEventId);
 
 module.exports = router;

@@ -54,7 +54,7 @@ const getResultByEventId = async (req, res) => {
   if (!eventExists) {
     throw new BadRequestError("Invalid Event ID");
   }
-
+  console.log(eventId);
   // Fetch result with populated user and event details
   const eventResult = await result
     .findOne({ EventId: eventId })
