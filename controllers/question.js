@@ -9,12 +9,11 @@ const getAllquestions = async (req, res) => {
   const object_id = req.params.object_id;
 
   const Result = await result.findOne({ EventId: _id });
-  console.log(Result);
-  // console.log(Result.Users.some(user => user.UserId == object_id));
+
   const isResultSubmitted = Result.Users.some(
     (user) => user.UserId == object_id
   );
-  console.log(isResultSubmitted);
+
   if (isResultSubmitted) {
     throw new BadRequestError("already submitted");
   }
@@ -29,7 +28,7 @@ const getAllquestions = async (req, res) => {
     throw new BadRequestError("User not registered");
   }
   const questions = await question.findOne({ EventId: _id }).sort("createdAt");
-  console.log(questions.Questions.length);
+
   res.status(StatusCodes.OK).json({ questions });
 };
 const getquestion = async (req, res) => {
@@ -53,7 +52,7 @@ const createquestion = async (req, res) => {
     throw new BadRequestError("Event not found");
   }
   console.log(req.body);
-  createQuestion.Questions.push(req.body.Questions);
+  createQuestion.Questions.push(...req.body.Questions);
   console.log(createQuestion);
   await createQuestion.save();
 
@@ -97,12 +96,11 @@ const checkquestion = async (req, res) => {
   const object_id = req.params.object_id;
 
   const Result = await result.findOne({ EventId: _id });
-  console.log(Result);
-  // console.log(Result.Users.some(user => user.UserId == object_id));
+
   const isResultSubmitted = Result.Users.some(
     (user) => user.UserId == object_id
   );
-  console.log(isResultSubmitted);
+
   if (isResultSubmitted) {
     res.status(StatusCodes.OK).json({ isResultSubmitted });
     return;
@@ -110,8 +108,6 @@ const checkquestion = async (req, res) => {
     res.status(StatusCodes.OK).json({ isResultSubmitted: false });
     return;
   }
-
-  return;
 };
 module.exports = {
   getAllquestions,

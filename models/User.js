@@ -52,8 +52,6 @@ const UserSchema = new mongoose.Schema({
 });
 
 UserSchema.methods.createVerificationToken = function () {
-  // Generate a random verification token using jwt
-
   const token = jwt.sign(
     { userId: this._id },
     process.env.JWT_SECRET_VERIFICATION,

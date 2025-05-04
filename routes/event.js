@@ -10,7 +10,7 @@ const {
 const { adminAuth } = require("../middleware/authentication");
 const { userAuth } = require("../middleware/authentication");
 
-router.route("/").get(userAuth, getEvent).post(adminAuth, createEvent);
+router.route("/").get(userAuth, getEvent).post(createEvent);
 
 router.route("/:id").delete(adminAuth).patch(adminAuth, updateEvent);
 

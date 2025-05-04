@@ -30,7 +30,7 @@ const createResult = async (req, res) => {
   }
 
   const Result = await result.findOne({ EventId });
-  console.log(Result);
+
   if (!Result) {
     throw new BadRequestError("Event not found");
   }
@@ -45,6 +45,36 @@ const createResult = async (req, res) => {
   res.status(StatusCodes.CREATED).json({ Result });
   // res.status(StatusCodes.CREATED).json({ createResult });
 };
+
+const getResultByEventId = async (req, res) => {
+  const { eventId } = req.body;
+
+  // Validate event
+  const eventExists = await Event.findById(eventId);
+  if (!eventExists) {
+    throw new BadRequestError("Invalid Event ID");
+  }
+
+  // Fetch result with populated user and event details
+  const eventResult = await result
+    .findOne({ EventId: eventId })
+    .populate("Users.UserId", "name email")
+    .populate("EventId", "event_name");
+
+  if (!eventResult) {
+    throw new NotFoundError("Result not found for this event");
+  }
+
+  // Fetch total number of questions for the event
+  const questionDoc = await question.findOne({ EventId: eventId });
+  const totalScore = questionDoc ? questionDoc.Questions.length : 0;
+
+  res.status(StatusCodes.OK).json({
+    eventResult,
+    totalScore,
+  });
+};
 module.exports = {
   createResult,
+  getResultByEventId,
 };

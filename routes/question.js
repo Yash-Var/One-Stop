@@ -11,7 +11,7 @@ const {
 const { adminAuth, eventAuth } = require("../middleware/authentication");
 const { userAuth } = require("../middleware/authentication");
 
-router.route("/").post(adminAuth, createquestion);
+router.route("/").post(createquestion);
 
 router
   .route("/:id")

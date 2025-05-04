@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
 
-const { createResult } = require("../controllers/result");
+const { createResult, getResultByEventId } = require("../controllers/result");
 const { adminAuth, eventAuth } = require("../middleware/authentication");
 const { userAuth } = require("../middleware/authentication");
 
-router.route("/").post(userAuth, createResult);
-
+router.route("/").post(createResult);
+router.route("/").get(getResultByEventId);
 
 module.exports = router;

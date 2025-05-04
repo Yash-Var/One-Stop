@@ -31,7 +31,6 @@ const QuestionSchema = new mongoose.Schema(
                 },
               },
             ],
-
             required: [false, "Please provide answer options"],
           },
         },

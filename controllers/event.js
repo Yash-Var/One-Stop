@@ -11,7 +11,7 @@ const createEvent = async (req, res) => {
   //.log(count);
 
   const createEvent = await Event.create(req.body);
-  console.log(createEvent);
+
   const Question = await question.create({ EventId: createEvent._id });
   const Result = await result.create({ EventId: createEvent._id });
   res.status(StatusCodes.CREATED).json({ createEvent });

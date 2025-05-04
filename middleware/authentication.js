@@ -6,8 +6,6 @@ const EventRegistration = require("../models/Result");
 const adminAuth = async (req, res, next) => {
   const authHeader = req.headers.authorization;
 
-  console.log(authHeader);
-
   if (!authHeader || !authHeader.startsWith("Bearer")) {
     throw new UnauthenticatedError("Authentication invalid");
   }
@@ -54,9 +52,6 @@ const userAuth = async (req, res, next) => {
 };
 
 const eventAuth = async (req, res, next) => {
-  // check header
-  //.log("yash");
-  console.log("yash");
   const { email } = req.body;
   const eventRegistration = await EventRegistration.findOne({ email });
   if (!eventRegistration) {
