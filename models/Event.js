@@ -33,6 +33,11 @@ const EventSchema = new mongoose.Schema(
       type: Number,
       required: [true, "Please provide max registration"],
     },
+    key: {
+      type: String,  // Can be 'quiz' or 'competition'
+      required: false,
+      enum: ['quiz', 'competition'],
+    },
     registrations: [
       {
         type: mongoose.Schema.Types.ObjectId,

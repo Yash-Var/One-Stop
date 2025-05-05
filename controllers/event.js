@@ -24,7 +24,7 @@ const getEvent = async (req, res) => {
   res.status(StatusCodes.OK).json({ getEvent });
 };
 const getid = async (req, res) => {
-  const events = await Event.find({}, { _id: 1, event_name: 1 }); // Only select _id and name
+  const events = await Event.find({}, { _id: 1, event_name: 1 , key:1}); // Only select _id and name
   res.status(StatusCodes.OK).json({ events });
 };
 

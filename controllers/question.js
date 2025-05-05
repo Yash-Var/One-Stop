@@ -49,27 +49,20 @@ const getquestions = async (req, res) => {
 const deletequestion = async (req, res) => {
   const { id: questionId } = req.params;
 
-  console.log(questionId)
+  // Use findOneAndUpdate to pull the question by ID from the array
+  const updatedDoc = await question.findOneAndUpdate(
+    { "Questions._id": questionId },
+    { $pull: { Questions: { _id: questionId } } },
+    { new: true } // return the updated document
+  );
 
-  // Find the document containing the question
-  const doc = await question.findOne({ "Questions._id": questionId });
-  console.log(doc)
-
-  if (!doc) {
+  if (!updatedDoc) {
     throw new NotFoundError(`No question found with id ${questionId}`);
   }
 
-  // Remove the question from the Questions array
-  doc.Questions = doc.Questions.filter(q => q._id.toString() !== questionId);
-  console.log("after")
-  console.log(doc)
-
-  // Save the updated document
-  await doc.save();
-
   res.status(StatusCodes.OK).json({
     msg: `Question with id ${questionId} deleted successfully.`,
-    questions: [doc], // You can flatten this on the frontend
+    questions: [updatedDoc],
   });
 };
 const getquestion = async (req, res) => {
