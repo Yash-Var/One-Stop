@@ -12,7 +12,7 @@ const QuestionSchema = new mongoose.Schema(
         {
           questionText: {
             type: String,
-            required: [false, "Please provide question text"],
+            required: [true, "Please provide question text"],
             maxlength: 100,
             minlength: 3,
           },
@@ -33,9 +33,14 @@ const QuestionSchema = new mongoose.Schema(
             ],
             required: [false, "Please provide answer options"],
           },
+          marks: {
+            type: Number,
+            required: [false, "Please provide marks for the question"],
+            min: [1, "Marks must be at least 1"],
+          },
         },
       ],
-      required: [false, "Please provide question"],
+      required: [true, "Please provide question"],
     },
   },
 
