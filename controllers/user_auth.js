@@ -42,7 +42,7 @@ const register = async (req, res) => {
 
   // //(process.env.VERIFY_EMAIL_URL);
   // VERIFY_EMAIL_URL=http://yourdomain.com/verify-email
-  const verificationUrl = `http://localhost:3000/email/${verificationToken}`;
+  const verificationUrl = `https://onestop.mindgrowthacademy.com/email/${verificationToken}`;
   // //(verificationUrl);
   const emailTemplate = `
     <html>

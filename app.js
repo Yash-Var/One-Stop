@@ -20,7 +20,7 @@ const productsRouter = require("./routes/products");
 const eventRouter = require("./routes/event");
 const event_regRouter = require("./routes/EventRegistration");
 const resultRouter = require("./routes/result");
-const competitionQuestionRoutes=require("./routes/competitionQuestionRoutes")
+const competitionQuestionRoutes = require("./routes/competitionQuestionRoutes");
 
 const questionRouter = require("./routes/question");
 // error handler
@@ -55,7 +55,7 @@ app.use("/api/v1/question", questionRouter);
 app.use("/api/v1/event_reg", event_regRouter);
 app.use("/api/v1/result", resultRouter);
 app.get("/email/:token", verifyEmail);
-app.use("/api/v1/cometition-quetion",competitionQuestionRoutes )
+app.use("/api/v1/cometition-quetion", competitionQuestionRoutes);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
