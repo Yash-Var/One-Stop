@@ -96,13 +96,15 @@ const register = async (req, res) => {
       subject: "Test Email",
       html: emailTemplate, // Set the email template as HTML content
     };
+    console.log(mailOptions)
 
     // Send the email
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
+        console.log("kush")
       } else {
+        console.log("yash")
       }
-
       transporter.close();
     });
 

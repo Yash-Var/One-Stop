@@ -1,14 +1,24 @@
 // controllers/competitionQuestionController.js
 const CompetitionQuestion = require('../models/CompetitionQuestion');
+const { StatusCodes } = require("http-status-codes");
+const { BadRequestError, NotFoundError } = require("../errors");
 
 exports.createQuestion = async (req, res) => {
-  try {
-    console.log(req.body)
-    const question = await CompetitionQuestion.create(req.body);
-    res.status(201).json(question);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
+  console.log(req.body.eventId);
+  const eventId = req.body.eventId;
+  const createQuestion = await CompetitionQuestion.findOne({ eventId });
+
+  console.log(createQuestion);
+
+  if (!createQuestion) {
+    throw new BadRequestError("Event not found");
   }
+  console.log(req.body);
+  createQuestion.questions.push(...req.body.questions);
+  console.log(createQuestion);
+  await createQuestion.save();
+
+  res.status(StatusCodes.CREATED).json({ createQuestion });
 };
 
 exports.getQuestionsByEvent = async (req, res) => {
