@@ -55,7 +55,7 @@ app.use("/api/v1/question", questionRouter);
 app.use("/api/v1/event_reg", event_regRouter);
 app.use("/api/v1/result", resultRouter);
 app.get("/email/:token", verifyEmail);
-app.use("/api/v1/cometition-quetion",competitionQuestionRoutes )
+app.use("/api/v1/cometition-question",competitionQuestionRoutes )
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);

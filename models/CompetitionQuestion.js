@@ -14,7 +14,7 @@ const questionSchema = new mongoose.Schema({
     required: true,
   },
   marks: {
-    type: String, // or use Number if marks should be numeric
+    type: String, 
     required: true,
   },
 });
@@ -26,7 +26,7 @@ const competitionQuestionSchema = new mongoose.Schema(
       ref: 'Event',
       required: true,
     },
-    questions: [questionSchema], // Embed an array of questions
+    questions: [questionSchema], 
   },
   {
     timestamps: true,
